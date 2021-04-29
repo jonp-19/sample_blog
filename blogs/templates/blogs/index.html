@@ -1,0 +1,27 @@
+{% extends 'blogs/base.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    {% if user.is_authenticated %}
+    <div class="jumbotron">
+        <hi class="display-3">Welcome back, {{ user.username }}.</hi>
+
+        <p class="lead">
+            Continue to add or edit your posts.  Or read over the public posts.
+        </p>
+        
+        <a class="btn btn-lg btn-primary" href="{% url 'blogs:entries' %}"
+            role="button">Blogposts &raquo;</a>
+    {% else %}
+    <div class="jumbotron">
+        <hi class="display-3">Make a public post.</hi>
+
+        <p class="lead">Become a registered member to start posting.  Or freely browse
+            the public posts.
+        </p>
+        
+        <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+            role="button">Register &raquo;</a>
+    </div>
+    {% endif %}
+{% endblock page_header %}

@@ -1,0 +1,29 @@
+{% extends "blogs/base.html" %}
+
+{% block page_header %}
+    <h1>Blog Posts</h1>
+{% endblock page_header %}
+
+{% block content %}
+
+    <p>
+        <a href="{% url 'blogs:new_blogpost' %}">Add a new blogpost</a>
+    </p>
+    
+    {% for blogpost in blogposts %}
+        <div class="card mb-3">
+            <h4 class="card-header">
+                <a href="{% url 'blogs:edit_blogpost' blogpost.id %}">{{ blogpost.title }}</a>
+                <footer class="blockquote-footer">
+                    written by <cite title="Source Title">{{ blogpost.owner }} on {{ blogpost.date_added|date:'M d, Y' }}
+                    </cite></footer>
+            </h4>
+            <div class="card-body">
+                {{ blogpost.text|linebreaks }}
+            </div>
+        </div>
+    {% empty %}
+        <p>There are no entries for this topic yet.</p>
+    {% endfor %}    
+
+{% endblock content %}

@@ -33,7 +33,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST')
 
 INSTALLED_APPS = [
     # My apps
-    'learning_logs',
+    'blogs',
     'users',
 
     # Third party apps.
@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'learning_log.urls'
+ROOT_URLCONF = 'blog.urls'
 
 TEMPLATES = [
     {
@@ -77,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'learning_log.wsgi.application'
+WSGI_APPLICATION = 'blog.wsgi.application'
 
 
 # Database

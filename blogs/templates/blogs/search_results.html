@@ -1,0 +1,30 @@
+{% extends 'blogs/base.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <h1>Search Results</h1>
+{% endblock page_header %}
+
+{% block content %}
+
+    <p>
+        <a href="{% url 'blogs:entries' %}">View all blogposts</a>
+    </p>
+    
+    {% for blogpost in object_list %}
+        <div class="card mb-3">
+            <h4 class="card-header">
+                <a href="{% url 'blogs:edit_blogpost' blogpost.id %}">{{ blogpost.title }}</a>
+                <footer class="blockquote-footer">
+                    written by <cite title="Source Title">{{ blogpost.owner }} on {{ blogpost.date_added|date:'M d, Y' }}
+                    </cite></footer>
+            </h4>
+            <div class="card-body">
+                {{ blogpost.text|linebreaks }}
+            </div>
+        </div>
+    {% empty %}
+        <p>No entries matched your search.</p>
+    {% endfor %}    
+
+{% endblock content %}

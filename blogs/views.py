@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Q
+from django.views.generic import ListView
 
 from .models import BlogPost
 from .forms import BlogForm
@@ -46,8 +49,6 @@ def new_blogpost(request):
 def edit_blogpost(request, blogpost_id):
     """Edit existing blogpost"""
     blogpost = get_object_or_404(BlogPost, id=blogpost_id)
-    #title = blogpost.title
-    #text = blogpost.text
     check_blogpost_owner(blogpost, request)
 
     if request.method != 'POST':
@@ -62,3 +63,14 @@ def edit_blogpost(request, blogpost_id):
 
     context = {'blogpost': blogpost, 'form': form}
     return render(request, 'blogs/edit_blogpost.html', context)
+
+class SearchResultsView(ListView):
+    model = BlogPost
+    template_name = 'blogs/search_results.html'    
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = BlogPost.objects.annotate(
+            search=SearchVector('title', 'text', 'owner'),
+            ).filter(search=query)
+        return object_list

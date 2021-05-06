@@ -3,6 +3,7 @@
 from django.urls import path
 
 from . import views
+from .views import SearchResultsView
 
 app_name = 'blogs'
 urlpatterns = [
@@ -14,4 +15,6 @@ urlpatterns = [
     path('new_blogpost/', views.new_blogpost, name='new_blogpost'),
     # Page for editing post
     path('edit_blogpost/<int:blogpost_id>/', views.edit_blogpost, name='edit_blogpost'),
+    # Search results
+    path('search/', SearchResultsView.as_view(), name='search_results'),
     ]
